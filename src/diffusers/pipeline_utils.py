@@ -501,6 +501,10 @@ class DiffusionPipeline(ConfigMixin):
             diffusers_module = importlib.import_module(cls.__module__.split(".")[0])
             pipeline_class = getattr(diffusers_module, config_dict["_class_name"])
 
+        if pipeline_class.__name__ == "StableDiffusionUpscalePipeline":
+            from diffusers import StableDiffusionUpscalePipeline
+            pipeline_class = StableDiffusionUpscalePipeline
+
         # To be removed in 1.0.0
         if pipeline_class.__name__ == "StableDiffusionInpaintPipeline" and version.parse(
             version.parse(config_dict["_diffusers_version"]).base_version
